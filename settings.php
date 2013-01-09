@@ -9,7 +9,7 @@ if (isset($_SERVER['SERVER_PROTOCOL'])) {
 } # if
 
 # hack until CP fixes the Spotweb urlencode
-$settings['spotweburl'] = 'http://192.168.1.201:8888';
+$settings['spotweburl'] = 'http://192.168.1.201:8888/';
 
 # Waar staat je OpenSSL.cnf ? Deze file moet leesbaar zijn voor de webserver als je de OpenSSL
 # extensie geinstalleerd hebt
