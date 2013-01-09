@@ -315,6 +315,12 @@ class SpotPage_newznabapi extends SpotPage_Abs {
 					$attr->setAttribute('name', 'comments');
 					$attr->setAttribute('value', $spot['commentcount']);
 					$item->appendChild($attr);
+
+					$attr = $doc->createElement('newznab:attr');
+					$attr->setAttribute('name', 'usenetdate');
+					$attr->setAttribute('value', date('r', $spot['stamp']));
+					$item->appendChild($attr);
+
 				} # if
 			} # foreach
 
