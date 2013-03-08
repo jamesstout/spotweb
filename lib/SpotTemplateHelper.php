@@ -375,10 +375,10 @@ class SpotTemplateHelper {
 		if (!$this->_spotSec->allowed(SpotSecurity::spotsec_retrieve_nzb, '')) {
 			return '';
 		} # if
-		
+				
 		return $this->makeBaseUrl("full") . '?page=getnzb&amp;action=display&amp;messageid=' . urlencode($spot['messageid']) . $this->makeApiRequestString();
 	} # makeNzbUrl
-
+  
 	/*
 	 * Creeert een linkje naar retrieve.php
 	 */

@@ -310,7 +310,7 @@ class SpotsOverview {
 			$nzb = $nntp->getNzb($fullSpot['nzb']);
 			$this->_cache->saveCache($fullSpot['messageid'], SpotCache::SpotNzb, false, $nzb);
 		} # else
-
+		
 		SpotTiming::stop(__FUNCTION__, array($fullSpot, $nntp));
 
 		return $nzb;
