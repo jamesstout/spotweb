@@ -7,7 +7,7 @@ Transifex is a modern, open-source localization platform. It’s a web system wh
 3. [Request a language](https://www.transifex.com/projects/p/spotweb/languages/add/) or request to be added to an existing Language Team.
 4. Click on the language you wish to help translate.
 5. Click on messages.po
-	*  Select "Download for translation" to download the .po file to your computer. See [Editing .po files][editing.pofiles] for details.
+	*  Select "Download for translation" to download the .po file to your computer. See [Editing .po files](#editing-po-files) for details.
 	* Or select "Translate Now" or "Try out our new editor" to translate online.
 6. Save your online edits or upload your updated .po file.
 
@@ -29,7 +29,7 @@ Template file written successfully
 
 	`msgfmt -c ./messages_template.po -o - -v`
 
-	There should be no errors. See [Installing gettext][installinggettext] for info on `msgfmt`.
+	There should be no errors. See [Installing gettext](#installing-gettext) for info on `msgfmt`.
 
 3. Go to the [SpotWeb resources page](https://www.transifex.com/projects/p/spotweb/resource/messagespo/) on Transifex.
 
