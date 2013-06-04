@@ -310,7 +310,7 @@ class SpotsOverview {
 			$nzb = $nntp->getNzb($fullSpot['nzb']);
 			$this->_cache->saveCache($fullSpot['messageid'], SpotCache::SpotNzb, false, $nzb);
 		} # else
-
+		
 		SpotTiming::stop(__FUNCTION__, array($fullSpot, $nntp));
 
 		return $nzb;
@@ -500,7 +500,7 @@ class SpotsOverview {
 		SpotTiming::start(__FUNCTION__);
 		
 		# en haal de daadwerkelijke spots op
-		$spotResults = $this->_db->getSpots($ourUserId, $start, $limit, $parsedSearch, false);
+		$spotResults = $this->_db->getSpots($ourUserId, $start, $limit, $parsedSearch);
 
 		$spotCnt = count($spotResults['list']);
 		for ($i = 0; $i < $spotCnt; $i++) {

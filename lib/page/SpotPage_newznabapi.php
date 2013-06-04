@@ -121,7 +121,7 @@ class SpotPage_newznabapi extends SpotPage_Abs {
 			} # if
 
 			# fetch remote content
-			if (!@list($http_code, $imdb) = $spotsOverview->getFromWeb('http://uk.imdb.com/title/tt' . $this->_params['imdbid'] . '/', false, 24*60*60)) {
+			if (!@list($http_code, $imdb) = $spotsOverview->getFromWeb('http://www.imdb.com/title/tt' . $this->_params['imdbid'] . '/', false, 24*60*60)) {
 				$this->showApiError(300);
 				
 				return ;
@@ -131,22 +131,30 @@ class SpotPage_newznabapi extends SpotPage_Abs {
 
 			/* Extract the release date from the IMDB info page */
 			if (preg_match('/\<a href="\/year\/([0-9]{4})/ms', $imdb['content'], $movieReleaseDate)) {
-				$movieReleaseDate = '"+(' . $movieReleaseDate[1] . ')"';
+				$movieReleaseDate = '+(' . $movieReleaseDate[1] . ')';
 			} else {
 				$movieReleaseDate = '';
 			} # else
 
-			$search['value'][] = "Titel:=:+\"" . trim($movieTitle[1]) . "\" " . $movieReleaseDate;
+			if (isset($movieTitle[1])) {
+				$search['value'][] = "Titel:=:OR:+\"" . trim($movieTitle[1]) . "\" " . $movieReleaseDate;
+			} else {
+				error_log('Unable to retrieve imdb information for newznab API');
+
+				$this->showApiError(300);
+				return ;
+
+			} # else
 
 			// imdb sometimes returns the title translated, if so, pass the original title as well
 			preg_match('/<span class="title-extra" itemprop="name">([^\<]*)<i>/ms', $imdb['content'], $originalTitle);
 			if ((!empty($originalTitle)) && ($originalTitle[1] != $movieTitle[1])) {
-				$search['value'][] = "Titel:=:+\"" . trim($originalTitle[1]) . "\" " . $movieReleaseDate;
+				$search['value'][] = "Title:=:OR:+\"" . trim($originalTitle[1]) . "\" " . $movieReleaseDate;
 			} # if
 
 		} elseif (!empty($this->_params['q'])) {
 			$searchTerm = str_replace(" ", " +", $this->_params['q']);
-			$search['value'][] = "Titel:=:+" . $searchTerm;
+			$search['value'][] = "Titel:=:OR:+" . $searchTerm;
 		} # elseif
 
 		if ($this->_params['maxage'] != "" && is_numeric($this->_params['maxage']))
@@ -645,8 +653,10 @@ class SpotPage_newznabapi extends SpotPage_Abs {
 											 'Games'	=> '4050')
 				), array('name'		=> 'TV',
 						 'cat'		=> '5000',
-						 'subcata'	=> array('SD'		=> '5030',
+						 'subcata'	=> array('Foreign'	=> '5020',
+											'SD'		=> '5030',
 											 'HD'		=> '5040',
+											 'Other'	=> '5050',
 											 'Sport'	=> '5060')
 				), array('name'		=> 'XXX',
 						 'cat'		=> '6000',
@@ -688,8 +698,10 @@ class SpotPage_newznabapi extends SpotPage_Abs {
 			case 4050: return 'cat2_a0,cat2_a1,cat2_a2';
 
 			case 5000: return 'cat0_z1';
+			case 5020: return 'cat0_z1,cat0_a0,cat0_a1,cat0_a2,cat0_a3,cat0_a4,cat0_a6,cat0_a7,cat0_a8,cat0_a9,cat0_a10';
 			case 5030: return 'cat0_z1,cat0_a0,cat0_a1,cat0_a2,cat0_a3,cat0_a10';
 			case 5040: return 'cat0_z1,cat0_a4,cat0_a6,cat0_a7,cat0_a8,cat0_a9';
+			case 5050: return 'cat0_z1,cat0_a0,cat0_a1,cat0_a2,cat0_a3,cat0_a4,cat0_a6,cat0_a7,cat0_a8,cat0_a9,cat0_a10';
 			case 5060: return 'cat0_z1,cat0_d18';
 
 			case 6000: return 'cat0_z3';
